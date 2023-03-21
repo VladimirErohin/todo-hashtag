@@ -1,0 +1,14 @@
+{
+  "tasks":[
+    {
+      "id": 0,
+      "task": "I wanna go to shop",
+      "tags": ["shop"]
+    },
+    {
+      "id": 1,
+      "task": "I wanna go to swimming",
+      "tags": ["swimming", "pool"]
+    }
+  ]
+}

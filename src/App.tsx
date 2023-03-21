@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
+import './styled.scss';
+import addIcon from './assets/add-todo.png';
+import axios from "axios";
+
+type TasksType = {
+    id: number,
+    task: string,
+    tags:string []
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const[tasks, setTasks] = useState <Array <TasksType>>()
+
+    useEffect(()=>{
+        axios.get('http://localhost:3030/tasks')
+            .then(res=>setTasks(res.data))
+    },[])
+    return (
+        <>
+            <div className="header"><h1>HashTag App</h1></div>
+            <div className="main">
+                <div className="todo-task">
+                    <input type="text"/><div className="add-btn"><img src={addIcon} alt="add-button"/></div>
+                </div>
+                <div className="list-task">
+                    <h2>List tasks</h2>
+                    <div className="list-tasks-wrapper">
+                        {tasks?.map(t=><div>{t.task}</div>)}
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 }
 
 export default App;
