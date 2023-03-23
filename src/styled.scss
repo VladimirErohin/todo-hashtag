@@ -43,7 +43,7 @@
     }
   }
 
-  .list-task{
+  .list-task {
     border-top: 1px solid #16191a;
     margin-top: 44px;
     width: 40%;
@@ -53,20 +53,55 @@
     flex-direction: column;
     align-items: center;
 
-    .list-tasks-wrapper{
-      .task{
+    .list-tasks-wrapper {
+      width: 60%;
+
+      .task {
         display: flex;
 
-        .edit-btn{
+        border: 1px solid deepskyblue;
+        height: 60px;
+        margin-bottom: 6px;
+
+        .info-task {
+          .text-task {
+
+          }
+
+          .tags-task {
+
+            .tag {
+              display: flex;
+              align-items: center;
+
+              p{
+                margin: 0;
+              }
+
+              .add-tag{
+                height: 10px;
+                width: 10px;
+                margin: 4px 0 0 6px;
+
+                :hover {
+                  height: 12px;
+                  width: 12px;
+                }
+              }
+            }
+          }
+        }
+
+        .edit-btn {
           margin-left: auto;
         }
 
-        img{
+        img {
           height: 20px;
           width: 20px;
           margin-left: 6px;
 
-          cursor: pointer ;
+          cursor: pointer;
         }
       }
     }
