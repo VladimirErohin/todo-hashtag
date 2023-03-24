@@ -22,7 +22,7 @@ function App() {
 
     useEffect(() => {
         axios.get('http://localhost:3030/tasks')
-            .then(res => setTasks(res.data))
+            .then(res => setTasks((res.data).reverse()))
     }, [rerender]);
 
     const onAddTask = () => {
@@ -76,6 +76,7 @@ function App() {
     };
 
     const onAddTags = () => {
+        console.log('add tag!!!')
     };
 
     return (
@@ -93,6 +94,13 @@ function App() {
                          onClick={changeTask ? onAddTask : onUpdateTask}>
                         <img src={addIcon} alt="add-button"/>
                     </div>
+
+                    <div>
+                        <input
+                            type="text"
+                        />
+                    </div>
+
                 </div>
                 <div className="list-task">
                     <h2>List tasks</h2>
@@ -106,15 +114,15 @@ function App() {
                                             key={t.id}
                                             className="tag">
                                             <p>{tag}</p>
-                                            <img src={addIcon} className="add-tag" alt="add-button"/></div>)}
+                                        </div>)}
                                     </div>
                                 </div>
 
                                 <div className="edit-btn" onClick={() => onEditTask(t.id)}>
-                                    <img src={editIcon} alt="edit-button"/>
+                                    <img src={editIcon} className="btn-list" alt="edit-button"/>
                                 </div>
                                 <div className="remove-btn" onClick={() => onRemoveTask(t.id)}>
-                                    <img src={removeIcon} alt="remove-button"/>
+                                    <img src={removeIcon} className="btn-list" alt="remove-button"/>
                                 </div>
                             </div>)}
                     </div>
