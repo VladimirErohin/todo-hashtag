@@ -1,35 +1,21 @@
 {
   "tasks": [
     {
-      "id": 1679602562344,
-      "task": "I want to have succes to proge",
+      "task": "i like sport ",
       "tags": [
-        "#proge"
-      ]
+        "play",
+        "body",
+        "golf"
+      ],
+      "id": 1679943178556
     },
     {
-      "id": 1679602776562,
-      "task": "I do to shop",
+      "id": 1679943276516,
+      "task": "i like study",
       "tags": [
-        "#shop"
+        "lesson",
+        "school"
       ]
-    },
-    {
-      "id": 1679602835319,
-      "task": "I do hometask",
-      "tags": [
-        "#hometask"
-      ]
-    },
-    {
-      "id": 1679684855548,
-      "task": "I go to cinema",
-      "tags": []
-    },
-    {
-      "task": "I go to cafe",
-      "tags": [],
-      "id": 1679685365499
     }
   ]
 }
