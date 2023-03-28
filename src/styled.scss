@@ -27,6 +27,13 @@
 
     width: 100%;
 
+    .edit-tags{
+      display: flex;
+      input{
+        outline:none;
+      }
+    }
+
     .task-wrapper {
 
       display: flex;

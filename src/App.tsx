@@ -4,12 +4,13 @@ import addIcon from './assets/add-todo.png';
 import editIcon from './assets/edit-icon.png';
 import removeIcon from './assets/remove-icon.png';
 import axios from "axios";
+//import debounce from 'lodash.debounce';
 
 type TasksType = {
     id: number,
     task: string,
     tags: string []
-}
+};
 
 function App() {
 
@@ -46,7 +47,11 @@ function App() {
         setTaskText({text:'', tags: ''});
     };
 
-    const onEditTask = (id: number) => {
+    const onGetEditTask = (id: number) => {
+        if(taskText.text){
+            return
+        }
+
         axios.get(`http://localhost:3030/tasks/${id}`)
             .then(res => {
                 setAddTask(res.data);
@@ -57,14 +62,19 @@ function App() {
         setChangeTask(!changeTask);
     };
 
+    const onCheckSimilarTags = ()=>{
+
+
+    }
+
     const onUpdateTask = () => {
         const task = {...addTask}
         const arrTags = taskText.tags.slice(1).replace(/#/g , ",").split(',');
-        let text = null
+        let text = taskText.text;
 
         if (taskText.text.includes('#')) {
             let start = taskText.text.indexOf('#');
-            text = taskText.text.slice(0, start)
+            text = taskText.text.slice(0, start);
             let tag = taskText.text.slice(start+1);
             arrTags.push(tag)
         }
@@ -85,6 +95,9 @@ function App() {
             .then(() => setRerender(!rerender));
     };
 
+    console.log(addTask, "- addTask")
+    console.log(taskText, "- taskText")
+
     return (
         <>
             <div className="header"><h1>HashTag App</h1></div>
@@ -102,8 +115,7 @@ function App() {
                             <img src={addIcon} alt="add-button"/>
                         </div>
                     </div>
-
-                    <div >
+                    <div className='edit-tags'>
                         <input
                             type="text"
                             className='tags-list'
@@ -124,13 +136,13 @@ function App() {
                                     <div className="tags-task">
                                         {t.tags.map((tag) => <div
                                             key={tag}
-                                            className="tag">
-                                            <p>#{tag}</p>
+                                            className="tag" >
+                                             <p>#{tag}</p>
                                         </div>)}
                                     </div>
                                 </div>
 
-                                <div className="edit-btn" onClick={() => onEditTask(t.id)}>
+                                <div className="edit-btn" onClick={() => onGetEditTask(t.id)}>
                                     <img src={editIcon} className="btn-list" alt="edit-button"/>
                                 </div>
                                 <div className="remove-btn" onClick={() => onRemoveTask(t.id)}>
