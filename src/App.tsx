@@ -4,7 +4,6 @@ import addIcon from './assets/add-todo.png';
 import editIcon from './assets/edit-icon.png';
 import removeIcon from './assets/remove-icon.png';
 import axios from "axios";
-//import debounce from 'lodash.debounce';
 
 type TasksType = {
     id: number,
@@ -16,7 +15,7 @@ function App() {
 
     const [tasks, setTasks] = useState<Array<TasksType>>([]);
     const [addTask, setAddTask] = useState<TasksType>();
-    const [taskText, setTaskText] = useState({text:'' , tags:''});
+    const [taskText, setTaskText] = useState({text: '', tags: ''});
     const [changeTask, setChangeTask] = useState(true);
     const [rerender, setRerender] = useState(true);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -28,14 +27,14 @@ function App() {
 
     const onAddTask = () => {
 
-        let tagsList:string []= [];
+        let tagsList: string [] = [];
 
-        if(taskText.tags.length>0){
-            const arrTags:string [] = taskText.tags.slice(1).replace(/#/g , ",").split(',')
+        if (taskText.tags.length > 0) {
+            const arrTags: string [] = taskText.tags.slice(1).replace(/#/g, ",").split(',')
             tagsList = arrTags
         }
 
-        let taskItem: TasksType = {
+        const taskItem: TasksType = {
             id: Date.now(),
             task: taskText.text,
             tags: [...tagsList]
@@ -44,38 +43,35 @@ function App() {
         axios.post('http://localhost:3030/tasks', taskItem)
             .then(() => setRerender(!rerender))
         setAddTask(taskItem)
-        setTaskText({text:'', tags: ''});
+        setTaskText({text: '', tags: ''});
     };
 
     const onGetEditTask = (id: number) => {
-        if(taskText.text){
+        if (taskText.text) {
             return
         }
 
         axios.get(`http://localhost:3030/tasks/${id}`)
             .then(res => {
                 setAddTask(res.data);
-                setTaskText({text:res.data.task,
-                    tags:res.data.tags.map((el:string)=>"#"+el).join('')});
+                setTaskText({
+                    text: res.data.task,
+                    tags: res.data.tags.map((el: string) => "#" + el).join('')
+                });
             })
         inputRef.current?.focus();
         setChangeTask(!changeTask);
     };
 
-    const onCheckSimilarTags = ()=>{
-
-
-    }
-
     const onUpdateTask = () => {
         const task = {...addTask}
-        const arrTags = taskText.tags.slice(1).replace(/#/g , ",").split(',');
+        const arrTags = taskText.tags.slice(1).replace(/#/g, ",").split(',');
         let text = taskText.text;
 
         if (taskText.text.includes('#')) {
             let start = taskText.text.indexOf('#');
             text = taskText.text.slice(0, start);
-            let tag = taskText.text.slice(start+1);
+            let tag = taskText.text.slice(start + 1);
             arrTags.push(tag)
         }
 
@@ -86,7 +82,7 @@ function App() {
 
         axios.put(`http://localhost:3030/tasks/${task.id}`, taskItem)
             .then(() => setRerender(!rerender));
-        setTaskText({text:"", tags: ""});
+        setTaskText({text: "", tags: ""});
         setChangeTask(!changeTask);
     };
 
@@ -108,20 +104,28 @@ function App() {
                             ref={inputRef}
                             type="text"
                             value={taskText.text}
-                            onChange={(e) => setTaskText({...taskText, text:e.target.value})}
+                            onChange={(e) => setTaskText({...taskText, text: e.target.value})}
                         />
                         <div className="add-btn"
                              onClick={changeTask ? onAddTask : onUpdateTask}>
                             <img src={addIcon} alt="add-button"/>
                         </div>
                     </div>
+                    {/*{!changeTask*/}
+                    {/*?*/}
+                    {/*    <div className='edit-tags'>*/}
+                    {/*        {addTask?.tags.map(t=>addTask?.task.includes(t) ? <p style={{color:"blue"}} key={t}>#{t}</p> : <p key={t}>#{t}</p>)}*/}
+
+                    {/*    </div>*/}
+                    {/*    : ""*/}
+                    {/*}*/}
                     <div className='edit-tags'>
                         <input
                             type="text"
                             className='tags-list'
                             placeholder='#tags'
                             value={taskText.tags}
-                            onChange={(e) => setTaskText({...taskText, tags:e.target.value})}
+                            onChange={(e) => setTaskText({...taskText, tags: e.target.value})}
                         />
                     </div>
 
@@ -136,8 +140,8 @@ function App() {
                                     <div className="tags-task">
                                         {t.tags.map((tag) => <div
                                             key={tag}
-                                            className="tag" >
-                                             <p>#{tag}</p>
+                                            className="tag">
+                                            <p>#{tag}</p>
                                         </div>)}
                                     </div>
                                 </div>
